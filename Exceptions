@@ -1,0 +1,85 @@
+mysql> create table Emp(
+    -> ID int,
+    -> Name varchar(20),
+    -> Age int,
+    -> Address varchar(20),
+    -> Salary int
+    -> );
+Query OK, 0 rows affected (1.30 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('1','ID','Name','Age','Address','Salary');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('1','Ramesh','23','Allahabad','20000');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('2','Raju','24','Ameerpet','22000');
+Query OK, 1 row affected (0.26 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('3','Rani','25','Khamam','25000');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('4','Ray','21','Khasmir','26000');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('5','Raj','19','Kasi','23000');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Emp(ID,Name,Age,Address,Salary)values('6','Rajesh','23','Kandlur','28000');
+Query OK, 1 row affected (0.21 sec)
+
+mysql> select*from Emp;
++------+--------+------+-----------+--------+
+| ID   | Name   | Age  | Address   | Salary |
++------+--------+------+-----------+--------+
+|    1 | Ramesh |   23 | Allahabad |  20000 |
+|    2 | Raju   |   24 | Ameerpet  |  22000 |
+|    3 | Rani   |   25 | Khamam    |  25000 |
+|    4 | Ray    |   21 | Khasmir   |  26000 |
+|    5 | Raj    |   19 | Kasi      |  23000 |
+|    6 | Rajesh |   23 | Kandlur   |  28000 |
++------+--------+------+-----------+--------+
+6 rows in set (0.00 sec)
+
+DECLARE  
+   c_id customers.id%type := 8;  
+   c_name  customers.name%type;  
+   c_addr customers.address%type;  
+BEGIN  
+   SELECT  name, address INTO  c_name, c_addr  
+   FROM customers  
+   WHERE id = c_id;  
+DBMS_OUTPUT.PUT_LINE ('Name: '||  c_name);  
+ DBMS_OUTPUT.PUT_LINE ('Address: ' || c_addr);  
+EXCEPTION  
+   WHEN no_data_found THEN  
+      dbms_output.put_line('No such customer!');  
+   WHEN others THEN  
+      dbms_output.put_line('Error!');  
+END;  
+/   
+
+No such customer!
+PL/SQL procedure successfully completed.
+
+
+DECLARE  
+   c_id customers.id%type := 5;  
+   c_name  customers.name%type;  
+   c_addr customers.address%type;  
+BEGIN  
+   SELECT  name, address INTO  c_name, c_addr  
+   FROM customers  
+   WHERE id = c_id;  
+DBMS_OUTPUT.PUT_LINE ('Name: '||  c_name);  
+ DBMS_OUTPUT.PUT_LINE ('Address: ' || c_addr);  
+EXCEPTION  
+   WHEN no_data_found THEN  
+      dbms_output.put_line('No such customer!');  
+   WHEN others THEN  
+      dbms_output.put_line('Error!');  
+END;  
+/   
+
+Name: alex
+Address: paris
+PL/SQL procedure successfully completed.
