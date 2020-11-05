@@ -1,0 +1,115 @@
+mysql> create table Students(
+    -> ROLLNO INT,
+    -> SNAME VARCHAR(20),
+    -> AGE INT,
+    -> COURSE VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (3.58 sec)
+
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values)('11','ANU','20','BSC');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')('11','ANU','20','BSC')' at line 1
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values('11','ANU','20','BSC');
+Query OK, 1 row affected (0.28 sec)
+
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values('12','ASHA','21','BCOM');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values('13','Arpit','18','BCA');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values('14','Chetan','20','BCA');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into Students(ROLLNO,SNAME,AGE,COURSE)values('15','Nihal','19','BBA');
+Query OK, 1 row affected (0.58 sec)
+
+mysql> select * from Students;
++--------+--------+------+--------+
+| ROLLNO | SNAME  | AGE  | COURSE |
++--------+--------+------+--------+
+|     11 | ANU    |   20 | BSC    |
+|     12 | ASHA   |   21 | BCOM   |
+|     13 | Arpit  |   18 | BCA    |
+|     14 | Chetan |   20 | BCA    |
+|     15 | Nihal  |   19 | BBA    |
++--------+--------+------+--------+
+5 rows in set (0.02 sec)
+
+set serveroutput on;
+
+DECLARE
+	sno student.rollno%type;
+	snm student.sname%type;
+	s_age student.age%type;
+	cr student.course%type;
+	-- Exception name declared below
+	already_exist EXCEPTION;
+	-- pragma statement to provide name to numbered exception
+	pragma exception_init(already_exist, -1);
+BEGIN
+	sno:=&rollno;
+	snm:='&sname';
+	s_age:=&age;
+	cr:='&course';
+	INSERT into student values(sno, snm, s_age, cr);
+	dbms_output.put_line('Record inserted');
+	EXCEPTION
+		WHEN already_exist THEN
+			dbms_output.put_line('Record already exist');
+END;
+
+
+Enter the value for sno:11
+Enter the value for snm:heena
+Enter the value for s_age:20
+Enter the value for cr:bsc
+Record already exist
+PL/SQL procedure successfully completed
+
+
+mysql> create table Students1(
+    -> Rollno int,
+    -> Sname varchar(20),
+    -> Total_Courses int
+    -> );
+Query OK, 0 rows affected (3.37 sec)
+
+mysql> select* from Students1;
++--------+--------+---------------+
+| Rollno | Sname  | Total_Courses |
++--------+--------+---------------+
+|     11 | ANU    |             2 |
+|     12 | Asha   |             1 |
+|     14 | Chetan |             1 |
+|     13 | Arpit  |             3 |
++--------+--------+---------------+
+4 rows in set (0.00 sec)
+
+set serveroutput on;
+
+DECLARE
+	sno student.rollno%type;
+	snm student.sname%type;
+	crno student.total_course%type;
+	invalid_total EXCEPTION;
+BEGIN
+	sno := &rollno;
+	snm := '&sname';
+	crno:=total_courses;
+	IF (crno > 3) THEN 
+		RAISE invalid_total;
+	END IF;
+	INSERT into student values(sno, snm, crno);
+	EXCEPTION
+		WHEN invalid_total THEN
+			dbms_output.put_line('Total number of courses cannot be more than 3');
+END;
+
+Enter the value for sno:15
+Enter the value for snm:Akash
+Enter the value for crno:5
+Total number of courses cannot be more than 3
+PL/SQL procedure successfully completed.
+
+
+
